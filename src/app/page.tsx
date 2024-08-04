@@ -1,113 +1,415 @@
-import Image from "next/image";
-
+import Layout from "@/components/Layout";
 export default function Home() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const currentTime = `${hours}:${minutes}`;
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <div className="min-h-screen bg-gray-100 py-8">
+      <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h1 className="text-2xl font-bold mb-6 text-stone-800">
+          ICT Technical Assistance Request Form
+        </h1>
+        <form>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Date
+              </label>
+              <input
+                type="date"
+                value={new Date().toISOString().split("T")[0]}
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-slate-800"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Time
+              </label>
+              <input
+                type="time"
+                value={currentTime}
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Requested By
+              </label>
+              <input
+                type="text"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 ">
+                Office/Service/Bureau
+              </label>
+              <input
+                type="text"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
+              />
+            </div>
+            {/* Add other form fields similarly */}
+          </div>
+
+          <div className="mt-6">
+            <label className="block text-sm font-medium text-gray-700">
+              Type of Request
+            </label>
+            <div className="mt-2 grid grid-cols-3 gap-4">
+              <div>
+                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <label
+                  htmlFor="desktop-repair"
+                  className="text-sm text-gray-700"
+                >
+                  Desktop/Laptop Repair
+                </label>
+                {/* Add more checkboxes similarly */}
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Hardware related
+                  </label>
+                </div>
+
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Software related
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    PC Reformat/Reimage
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    PC Tuneup/Windows Update
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Virus Scanning
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <label
+                  htmlFor="desktop-repair"
+                  className="text-sm text-gray-700"
+                >
+                  APPLICAION/SOFTWARE/SYSTEM ASSISTANCE
+                </label>
+                {/* Add more checkboxes similarly */}
+
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    DILG Portal/System
+                  </label>
+                </div>
+
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Google Drive
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Software Installation
+                  </label>
+                </div>
+
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Video Conferencing
+                  </label>
+                </div>
+
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Others (please specify)
+                  </label>
+                </div>
+              </div>
+              <div>
+                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <label
+                  htmlFor="desktop-repair"
+                  className="text-sm text-gray-700"
+                >
+                  INTERNET CONNECTIVITY
+                </label>
+                {/* Add more checkboxes similarly */}
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Installation/Relocation
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Troubleshooting
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Web Apps/Website Access
+                  </label>
+                </div>
+              </div>
+              <div>
+                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <label
+                  htmlFor="desktop-repair"
+                  className="text-sm text-gray-700"
+                >
+                  HARDWARE INSTALLATION
+                </label>
+                {/* Add more checkboxes similarly */}
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Desktop Assembly/PC Setup
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Computer Parts Installation
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Router/Access Point Installation
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Network Switch Deployment
+                  </label>
+                </div>
+              </div>
+              <div>
+                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <label
+                  htmlFor="desktop-repair"
+                  className="text-sm text-gray-700"
+                >
+                  GOVMAIL ASSISTANCE
+                </label>
+                {/* Add more checkboxes similarly */}
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Create/Update/Delete Account
+                  </label>
+                </div>
+
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Password Reset/Unblock Account
+                  </label>
+                </div>
+              </div>
+              <div>
+                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <label
+                  htmlFor="desktop-repair"
+                  className="text-sm text-gray-700"
+                >
+                  POSTING/UPDATING OF INFORMATION IN THE DILG WEBSITE
+                </label>
+                {/* Add more checkboxes similarly */}
+              </div>
+
+              <div>
+                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <label
+                  htmlFor="desktop-repair"
+                  className="text-sm text-gray-700"
+                >
+                  PRINTER/SCANNER/COPIER
+                </label>
+                {/* Add more checkboxes similarly */}
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Installation/Setup
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Networking/Sharing
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Troubleshooting
+                  </label>
+                </div>
+              </div>
+              <div>
+                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <label
+                  htmlFor="desktop-repair"
+                  className="text-sm text-gray-700"
+                >
+                  IP TELEPHONY
+                </label>
+                {/* Add more checkboxes similarly */}
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Installation/Relocation
+                  </label>
+                </div>
+                <div className="ml-4">
+                  <input type="checkbox" id="desktop-repair" className="mr-2" />
+                  <label
+                    htmlFor="desktop-repair"
+                    className="text-sm text-gray-700"
+                  >
+                    Troubleshooting
+                  </label>
+                </div>
+              </div>
+              <div>
+                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <label
+                  htmlFor="desktop-repair"
+                  className="text-sm text-gray-700"
+                >
+                  OTHERS (please specify)
+                </label>
+                {/* Add more checkboxes similarly */}
+                <textarea
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
+                  rows={4}
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="mt-6">
+              <label className="block text-sm font-medium text-gray-700">
+                Additional Information/Remarks
+              </label>
+              <textarea
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
+                rows={4}
+              ></textarea>
+            </div>
+
+            <div className="mt-6">
+              <label className="block text-sm font-medium text-gray-700">
+                Action Taken/Resolution/Recommendation
+              </label>
+              <textarea
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
+                rows={4}
+              ></textarea>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
