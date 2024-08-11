@@ -37,7 +37,7 @@ export default function Form() {
                   </label>
                   <input
                     type="time"
-                    name="request_name"
+                    name="request_time"
                     value={currentTime}
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
                   />
@@ -143,7 +143,7 @@ export default function Form() {
           </label>
           <div className="mt-2 grid grid-cols-3 gap-4">
             <div>
-              <input type="checkbox" id="desktop-repair" className="mr-2" />
+              <input type="checkbox" id="desktop-repair" name="deskk" className="mr-2" />
               <label htmlFor="desktop-repair" className="text-sm text-gray-700">
                 Desktop/Laptop Repair
               </label>
@@ -153,7 +153,7 @@ export default function Form() {
                   type="checkbox"
                   id="desktop-repair"
                   name="request_type"
-                  value=""
+                  value="Desktop Repair"
                   className="mr-2"
                 />
                 <label
@@ -165,9 +165,9 @@ export default function Form() {
               </div>
 
               <div className="ml-4">
-                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <input type="checkbox" id="software-related" value='Software Related' className="mr-2" />
                 <label
-                  htmlFor="desktop-repair"
+                  htmlFor="software-related"
                   className="text-sm text-gray-700"
                 >
                   Software related
