@@ -143,7 +143,13 @@ export default function Form() {
           </label>
           <div className="mt-2 grid grid-cols-3 gap-4">
             <div>
-              <input type="checkbox" id="desktop-repair" name="deskk" className="mr-2" />
+              <input
+                type="checkbox"
+                id="desktop-repair"
+                name="request_type[]"
+                value={1}
+                className="mr-2"
+              />
               <label htmlFor="desktop-repair" className="text-sm text-gray-700">
                 Desktop/Laptop Repair
               </label>
@@ -151,9 +157,9 @@ export default function Form() {
               <div className="ml-4">
                 <input
                   type="checkbox"
-                  id="desktop-repair"
-                  name="request_type"
-                  value="Desktop Repair"
+                  id="hardware-related"
+                  name="dl_repair[]"
+                  value={10}
                   className="mr-2"
                 />
                 <label
@@ -165,7 +171,13 @@ export default function Form() {
               </div>
 
               <div className="ml-4">
-                <input type="checkbox" id="software-related" value='Software Related' className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="software-related"
+                  name="dl_repair[]"
+                  value={11}
+                  className="mr-2"
+                />
                 <label
                   htmlFor="software-related"
                   className="text-sm text-gray-700"
@@ -174,7 +186,13 @@ export default function Form() {
                 </label>
               </div>
               <div className="ml-4">
-                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="reimage"
+                  value={12}
+                  name="dl_repair[]"
+                  className="mr-2"
+                />
                 <label
                   htmlFor="desktop-repair"
                   className="text-sm text-gray-700"
@@ -183,7 +201,13 @@ export default function Form() {
                 </label>
               </div>
               <div className="ml-4">
-                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="windows-update"
+                  name="dl_repair[]"
+                  value={13}
+                  className="mr-2"
+                />
                 <label
                   htmlFor="desktop-repair"
                   className="text-sm text-gray-700"
@@ -192,7 +216,12 @@ export default function Form() {
                 </label>
               </div>
               <div className="ml-4">
-                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="virus-scanning"
+                  value={14}
+                  className="mr-2"
+                />
                 <label
                   htmlFor="desktop-repair"
                   className="text-sm text-gray-700"
@@ -203,14 +232,20 @@ export default function Form() {
             </div>
 
             <div>
-              <input type="checkbox" id="desktop-repair" className="mr-2" />
+              <input type="checkbox" id="request_type[]" className="mr-2" />
               <label htmlFor="desktop-repair" className="text-sm text-gray-700">
-                APPLICAION/SOFTWARE/SYSTEM ASSISTANCE
+                APPLICATION/SOFTWARE/SYSTEM ASSISTANCE
               </label>
               {/* Add more checkboxes similarly */}
 
               <div className="ml-4">
-                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="dilg_portal"
+                  name="system_assistance[]"
+                  value={15}
+                  className="mr-2"
+                />
                 <label
                   htmlFor="desktop-repair"
                   className="text-sm text-gray-700"
@@ -220,7 +255,13 @@ export default function Form() {
               </div>
 
               <div className="ml-4">
-                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="google-drive"
+                  name="system_assistance[]"
+                  value={16}
+                  className="mr-2"
+                />
                 <label
                   htmlFor="desktop-repair"
                   className="text-sm text-gray-700"
@@ -229,7 +270,13 @@ export default function Form() {
                 </label>
               </div>
               <div className="ml-4">
-                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="software-installation"
+                  name="system_assistance[]"
+                  className="mr-2"
+                  value={17}
+                />
                 <label
                   htmlFor="desktop-repair"
                   className="text-sm text-gray-700"
@@ -239,9 +286,15 @@ export default function Form() {
               </div>
 
               <div className="ml-4">
-                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="video-conferencing"
+                  name="system_assistance[]"
+                  className="mr-2"
+                  value={18}
+                />
                 <label
-                  htmlFor="desktop-repair"
+                  htmlFor="video-conferencing"
                   className="text-sm text-gray-700"
                 >
                   Video Conferencing
@@ -249,7 +302,13 @@ export default function Form() {
               </div>
 
               <div className="ml-4">
-                <input type="checkbox" id="desktop-repair" className="mr-2" />
+                <input
+                  type="checkbox"
+                  id="sa-others"
+                  name="system_assistance[]"
+                  className="mr-2"
+                  value={19}
+                />
                 <label
                   htmlFor="desktop-repair"
                   className="text-sm text-gray-700"
