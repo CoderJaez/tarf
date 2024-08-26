@@ -12,7 +12,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert("Requests", [
+    await queryInterface.bulkInsert("RequestTypes", [
       {
         type: "DESKTOP/LAPTOP REPAIR",
       },
@@ -160,6 +160,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
-    await queryInterface.bulkDelete("Requests", null, {});
+    await queryInterface.bulkDelete("RequestTypes", null, {});
   },
 };
