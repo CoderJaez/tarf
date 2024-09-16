@@ -9,29 +9,63 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable("Requests", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
         type: Sequelize.INTEGER,
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      username: {
-        type: Sequelize.STRING,
+      officeId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "Offices",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
-      password: {
+      contactNo: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
-      email: {
+      agreedTimeline: {
         type: Sequelize.STRING,
-        allowNull: false,
+      },
+      dateRequested: {
+        type: Sequelize.DATE,
+      },
+      equipmentType: {
+        type: Sequelize.STRING,
+      },
+      brand: {
+        type: Sequelize.STRING,
+      },
+      propertyNo: {
+        type: Sequelize.STRING,
+      },
+      serialNo: {
+        type: Sequelize.STRING,
+      },
+      remarks: {
+        type: Sequelize.TEXT,
+      },
+      recommendation: {
+        type: Sequelize.TEXT,
+      },
+      assignedTechId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+      },
+      dateDone: {
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
@@ -55,6 +89,7 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable("Users");
+
+    await queryInterface.dropTable("Requests");
   },
 };

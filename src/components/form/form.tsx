@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Select from "@/components/form_elements/Select";
 import { Option } from "@/types";
+
 type Prop = {
   offices: {
     name: string;
@@ -24,7 +25,10 @@ const Form: React.FC<Prop> = ({ offices }) => {
     const requestTypes = Array.from(checkboxes).map(
       (checkbox: HTMLInputElement) => checkbox.value
     );
-    console.log(requestTypes);
+
+    
+
+
   };
   return (
     <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">

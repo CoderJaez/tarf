@@ -1,10 +1,17 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "@/connection";
+import Request from "@/models/Request"
 
 class Office extends Model {
     declare id: number;
     declare name: string;
     declare acronym: string;
+
+    static associate(models: any) {
+        Office.belongsTo(models.Request, {
+            foreignKey: 'officeId'
+        })
+    }
 }
 
 Office.init(
@@ -29,6 +36,9 @@ Office.init(
     updatedAt: 'updatedAt'
 }
 )
+
+
+
 
 
 export default Office
