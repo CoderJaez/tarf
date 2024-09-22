@@ -1,7 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Select from "@/components/form_elements/Select";
 import { Option } from "@/types";
+import { RequestSchema } from "@/schemas/request.schema";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { insertRequest } from "@/services/request";
+import Swal from "sweetalert2";
 
 type Prop = {
   offices: {
@@ -11,31 +16,29 @@ type Prop = {
   };
 };
 const Form: React.FC<Prop> = ({ offices }) => {
+  type RequestFormData = z.infer<typeof RequestSchema>;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RequestFormData>({ resolver: zodResolver(RequestSchema) });
   const now = new Date();
   const hours = String(now.getHours()).padStart(2, "0");
   const minutes = String(now.getMinutes()).padStart(2, "0");
   const currentTime = `${hours}:${minutes}`;
-
-  const submit = async (formData: FormData) => {
-    console.log("data:", Object.fromEntries(formData.entries()));
-    const checkboxes = document.querySelectorAll<HTMLInputElement>(
-      'input[name="request_type[]"]:checked'
-    );
-
-    const requestTypes = Array.from(checkboxes).map(
-      (checkbox: HTMLInputElement) => checkbox.value
-    );
-
-    
-
-
+  const submit = async (formData: RequestFormData) => {
+    Swal.fire({
+      title: "Test",
+    });
+    // const result = await insertRequest(formData);
+    // console.log(result);
   };
   return (
     <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-6 text-stone-800">
         ICT Technical Assistance Request Form
       </h1>
-      <form action={submit}>
+      <form onSubmit={handleSubmit(submit)}>
         <div className="grid grid-cols-2 gap-2">
           <div className="border rounded">
             <div className="bg-gray-800 p-2 rounded-t">
@@ -50,10 +53,15 @@ const Form: React.FC<Prop> = ({ offices }) => {
                   </label>
                   <input
                     type="date"
-                    name="request_date"
+                    {...register("date_requested")}
                     defaultValue={new Date().toISOString().split("T")[0]}
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-slate-800"
                   />
+                  {errors.date_requested && (
+                    <span className="text-red-500 italic text-sm">
+                      {errors.date_requested.message}
+                    </span>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
@@ -61,10 +69,15 @@ const Form: React.FC<Prop> = ({ offices }) => {
                   </label>
                   <input
                     type="time"
-                    name="request_time"
+                    {...register("time_requested")}
                     defaultValue={currentTime}
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
                   />
+                  {errors.time_requested && (
+                    <span className="text-red-500 italic text-sm">
+                      {errors.time_requested.message}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className=" mt-2">
@@ -73,15 +86,22 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 </label>
                 <input
                   type="text"
-                  name="request_name"
+                  {...register("request_name")}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
                 />
+                {errors.request_name && (
+                  <span className="text-red-500 italic text-sm">
+                    {errors.request_name?.message}
+                  </span>
+                )}
               </div>
               <div className=" mt-2">
                 <Select
-                  name={offices.name}
+                  name="office"
                   label={offices.label}
                   options={offices.options}
+                  register={register}
+                  errors={errors}
                 />
               </div>
               <div className=" mt-2">
@@ -90,9 +110,14 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 </label>
                 <input
                   type="text"
-                  name="contact_no"
+                  {...register("contact_no")}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
                 />
+                {errors.contact_no && (
+                  <span className="text-red-500 italic text-sm">
+                    {errors.contact_no.message}
+                  </span>
+                )}
               </div>
 
               <div className=" mt-2">
@@ -101,9 +126,14 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 </label>
                 <input
                   type="text"
-                  name="timeline"
+                  {...register("agreed_timeline")}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
                 />
+                {errors.agreed_timeline && (
+                  <span className="text-red-500 italic text-sm">
+                    {errors.agreed_timeline.message}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -162,11 +192,16 @@ const Form: React.FC<Prop> = ({ offices }) => {
           <label className="block text-sm font-medium text-gray-700">
             Type of Request
           </label>
+          {errors.request_type && (
+            <span className="text-red-500 italic text-sm">
+              {errors.request_type.message}
+            </span>
+          )}
           <div className="mt-2 grid grid-cols-3 gap-4">
             <div>
               <input
                 type="checkbox"
-                name="request_type[]"
+                {...register("request_type")}
                 value={1}
                 className="mr-2"
               />
@@ -178,7 +213,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="hardware-related"
-                  name="request_type[]"
+                  {...register("request_type")}
                   value={10}
                   className="mr-2"
                 />
@@ -194,7 +229,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="software-related"
-                  name="request_type[]"
+                  {...register("request_type")}
                   value={11}
                   className="mr-2"
                 />
@@ -210,7 +245,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                   type="checkbox"
                   id="reimage"
                   value={12}
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
                 />
                 <label
@@ -224,7 +259,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="windows-update"
-                  name="request_type[]"
+                  {...register("request_type")}
                   value={13}
                   className="mr-2"
                 />
@@ -241,7 +276,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                   id="virus-scanning"
                   value={14}
                   className="mr-2"
-                  name="request_type[]"
+                  {...register("request_type")}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -257,7 +292,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 type="checkbox"
                 id="app_software_system"
                 value={2}
-                name="request_type[]"
+                {...register("request_type")}
                 className="mr-2"
               />
               <label htmlFor="desktop-repair" className="text-sm text-gray-700">
@@ -269,7 +304,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="dilg_portal"
-                  name="request_type[]"
+                  {...register("request_type")}
                   value={15}
                   className="mr-2"
                 />
@@ -285,7 +320,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="google-drive"
-                  name="request_type[]"
+                  {...register("request_type")}
                   value={16}
                   className="mr-2"
                 />
@@ -300,7 +335,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="software-installation"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
                   value={17}
                 />
@@ -316,7 +351,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="video-conferencing"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
                   value={18}
                 />
@@ -332,7 +367,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="sa-others"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
                   value={19}
                 />
@@ -348,8 +383,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
               <input
                 type="checkbox"
                 id="internet_conn"
-                name="request_type[]"
+                {...register("request_type")}
                 className="mr-2"
+                value={3}
               />
               <label htmlFor="internet_conn" className="text-sm text-gray-700">
                 INTERNET CONNECTIVITY
@@ -359,8 +395,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="installation"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={53}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -373,8 +410,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="troubleshoot"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={54}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -387,8 +425,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="web_access"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={55}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -402,8 +441,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
               <input
                 type="checkbox"
                 id="hardware_install"
-                name="request_type[]"
+                {...register("request_type")}
                 className="mr-2"
+                value={4}
               />
               <label htmlFor="desktop-repair" className="text-sm text-gray-700">
                 HARDWARE INSTALLATION
@@ -413,8 +453,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="assembly"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={56}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -427,8 +468,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="computer_parts"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={57}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -441,8 +483,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="ap_installation"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={58}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -455,8 +498,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="network_switch"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={59}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -470,8 +514,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
               <input
                 type="checkbox"
                 id="govmail"
-                name="request_type[]"
+                {...register("request_type")}
                 className="mr-2"
+                value={5}
               />
               <label htmlFor="desktop-repair" className="text-sm text-gray-700">
                 GOVMAIL ASSISTANCE
@@ -481,8 +526,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="account"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={27}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -496,8 +542,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="reset_pass"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={28}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -511,8 +558,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
               <input
                 type="checkbox"
                 id="dilg_web"
-                name="request_type[]"
+                {...register("request_type")}
                 className="mr-2"
+                value={6}
               />
               <label htmlFor="desktop-repair" className="text-sm text-gray-700">
                 POSTING/UPDATING OF INFORMATION IN THE DILG WEBSITE
@@ -524,8 +572,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
               <input
                 type="checkbox"
                 id="printer"
-                name="request_type[]"
+                {...register("request_type")}
                 className="mr-2"
+                value={7}
               />
               <label htmlFor="desktop-repair" className="text-sm text-gray-700">
                 PRINTER/SCANNER/COPIER
@@ -535,8 +584,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="setup_installation"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={29}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -549,8 +599,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="network"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={30}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -563,8 +614,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="troubleshoot_1"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={31}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -578,8 +630,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
               <input
                 type="checkbox"
                 id="ip_phone"
-                name="request_type[]"
+                {...register("request_type")}
                 className="mr-2"
+                value={8}
               />
               <label htmlFor="desktop-repair" className="text-sm text-gray-700">
                 IP TELEPHONY
@@ -589,8 +642,9 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 <input
                   type="checkbox"
                   id="install_relocation"
-                  name="request_type[]"
+                  {...register("request_type")}
                   className="mr-2"
+                  value={32}
                 />
                 <label
                   htmlFor="desktop-repair"
@@ -600,7 +654,12 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 </label>
               </div>
               <div className="ml-4">
-                <input type="checkbox" name="request_type[]" className="mr-2" />
+                <input
+                  value={33}
+                  type="checkbox"
+                  {...register("request_type")}
+                  className="mr-2"
+                />
                 <label
                   htmlFor="desktop-repair"
                   className="text-sm text-gray-700"
@@ -610,13 +669,19 @@ const Form: React.FC<Prop> = ({ offices }) => {
               </div>
             </div>
             <div>
-              <input type="checkbox" name="request_type[]" className="mr-2" />
+              <input
+                type="checkbox"
+                value={9}
+                {...register("request_type")}
+                className="mr-2"
+              />
               <label htmlFor="desktop-repair" className="text-sm text-gray-700">
                 OTHERS (please specify)
               </label>
               {/* Add more checkboxes similarly */}
               <textarea
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
+                {...register("other_request")}
                 rows={4}
               ></textarea>
             </div>
@@ -628,10 +693,15 @@ const Form: React.FC<Prop> = ({ offices }) => {
               Additional Information/Remarks
             </label>
             <textarea
-              name="remarks"
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
               rows={4}
+              {...register("remarks")}
             ></textarea>
+            {errors.remarks && (
+              <span className="text-red-500 italic text-sm">
+                {errors.remarks.message}
+              </span>
+            )}
           </div>
 
           <div className="mt-6">
@@ -639,9 +709,10 @@ const Form: React.FC<Prop> = ({ offices }) => {
               Action Taken/Resolution/Recommendation
             </label>
             <textarea
-              name="action_taken"
+              {...register("action_taken")}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2  text-slate-800"
               rows={4}
+              disabled
             ></textarea>
           </div>
         </div>

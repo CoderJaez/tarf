@@ -1,13 +1,16 @@
 "use client";
 import React, { useState } from "react";
+import { z } from "zod";
 import { Option } from "@/types/";
-
+import { UseFormRegister } from "react-hook-form";
 type Prop = {
+  register: UseFormRegister<any>;
   name: string;
   label: string;
+  errors: Record<string, any>;
   options: Option[];
 };
-const Select: React.FC<Prop> = ({ name, label, options }) => {
+const Select: React.FC<Prop> = ({ register, name, label, options, errors }) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
@@ -24,7 +27,7 @@ const Select: React.FC<Prop> = ({ name, label, options }) => {
       <div className="relative z-20 bg-transparent dark:bg-form-input">
         <select
           value={selectedOption}
-          name={name}
+          {...register(name)}
           onChange={(e) => {
             setSelectedOption(e.target.value);
             changeTextColor();
@@ -67,6 +70,11 @@ const Select: React.FC<Prop> = ({ name, label, options }) => {
           </svg>
         </span>
       </div>
+      {errors[name] && (
+        <span className="text-red-500 italic text-sm">
+          {errors[name].message}
+        </span>
+      )}
     </div>
   );
 };

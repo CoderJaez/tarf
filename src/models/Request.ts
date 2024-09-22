@@ -2,7 +2,8 @@
 // import User from '@/models/User'
 import { Model, DataTypes } from "sequelize";
 import sequelize from "@/connection";
-
+import moment from "moment";
+import { BeforeCreate } from "sequelize-typescript";
 class Request extends Model {
     declare id: number;
     declare name: string;
@@ -16,7 +17,9 @@ class Request extends Model {
     declare remarks: string | null;
     declare recommendation: string | null;
     declare assignedTechId: number | null;
-    declare dateDone: Date
+    declare dateDone: Date | null
+    declare code: string
+    declare officeId: number;
 
     static associate(models: any) {
 
@@ -74,17 +77,42 @@ Request.init({
             key: 'id'
         }
     },
+    officeId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'Offices',
+            key: 'id'
+        }
+    },
     dateDone: {
         type: DataTypes.DATE
+    },
+    code: {
+        type: DataTypes.STRING
     }
 
 }, {
     tableName: 'Requests',
     sequelize,
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-})
+    updatedAt: 'updatedAt',
+    hooks: {
+        beforeCreate: async (request, options) => {
+            const yearMonth = moment().format('YYYYMM')
+            const lastRequest = await Request.findOne({
+                order: [['createdAt', 'DESC']]
+            })
+            let nextNumber = '0001';
+            if (lastRequest && lastRequest.code) {
+                const lastRequestCode = lastRequest.code;
+                const lastSequence = parseInt(lastRequest.code.split('-')[1]);
+                nextNumber = String(lastSequence + 1).padStart(4, '0')
+            }
 
+            request.code = `${yearMonth}-${nextNumber}`
+        }
+    }
+})
 
 
 
