@@ -1,10 +1,80 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
+import { Menu, X, Home, Users, Calendar, Settings, Ticket } from "lucide-react";
 
 type Props = {
   children: any;
 };
 const Layout: React.FC<Props> = ({ children }) => {
-  return <div>Layout</div>;
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const navItems = [
+    { name: "Dashboard", icon: Home, href: "/dashboard" },
+    { name: "Ticket", icon: Ticket, href: "/" },
+    { name: "Customers", icon: Users, href: "/customers" },
+    { name: "Calendar", icon: Calendar, href: "/calendar" },
+    { name: "Settings", icon: Settings, href: "/settings" },
+  ];
+
+  return (
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar */}
+      <div
+        className={`${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } fixed inset-y-0 left-0 z-30 w-64 bg-gray-900 text-white transition duration-300 ease-in-out transform lg:translate-x-0 lg:static lg:inset-0`}
+      >
+        <div className="flex items-center justify-between h-16 px-6">
+          <span className="text-2xl font-semibold">Admin Panel</span>
+          <button onClick={() => setSidebarOpen(false)} className="lg:hidden">
+            <X size={24} />
+          </button>
+        </div>
+        <nav className="mt-8">
+          <ul>
+            {navItems.map((item) => (
+              <li key={item.name} className="px-6 py-3">
+                <Link
+                  href={item.href}
+                  className="flex items-center space-x-3 text-gray-300 hover:text-white"
+                >
+                  <item.icon size={20} />
+                  <span>{item.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      {/* Main content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top bar */}
+        <header className="flex items-center justify-between px-6 py-4 bg-white border-b">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="text-gray-500 focus:outline-none lg:hidden"
+          >
+            <Menu size={24} />
+          </button>
+          <div className="flex items-center space-x-4">
+            <span className="font-semibold text-slate-800">John Doe</span>
+            <img
+              className="h-8 w-8 rounded-full"
+              src="/api/placeholder/32/32"
+              alt="User avatar"
+            />
+          </div>
+        </header>
+
+        {/* Page content */}
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
+          {children}
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default Layout;

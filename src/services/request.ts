@@ -1,14 +1,17 @@
 "use server"
+import beamsClient from "@/libs/push_notifications/beam";
 import Request from "@/models/Request";
+import RequestDetail from "@/models/RequestDetails";
 import { RequestSchema } from "@/schemas/request.schema";
 import { z } from 'zod'
-import moment from "moment";
+import sequelize from "@/connection";
 const getRequest = async () => {
     const requests = await Request.findAll();
     return requests;
 }
 
 const insertRequest = async (data: z.infer<typeof RequestSchema>) => {
+    const t = await sequelize.transaction();
     try {
         const newRequest = await Request.create({
             name: data.request_name,
@@ -23,11 +26,31 @@ const insertRequest = async (data: z.infer<typeof RequestSchema>) => {
             recommendation: data.action_taken,
             officeId: parseInt(data.office)
 
-        })
-        if (newRequest)
-            return true;
+        }, { transaction: t })
+
+        for (let typeId in data.request_type) {
+
+            const request_details = await RequestDetail.create({
+                requestTypeId: parseInt(data.request_type[typeId]),
+                requestId: newRequest.id
+
+            }, { transaction: t })
+
+        }
+
+        t.commit();
+        await beamsClient.publishToInterests(["hello"], {
+            web: {
+                notification: {
+                    title: "You have new request",
+                    body: data.remarks,
+                },
+            },
+        });
+        return true;
     } catch (error: any) {
         console.log(error.message)
+        t.rollback();
         return false;
     }
 

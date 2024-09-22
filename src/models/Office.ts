@@ -1,6 +1,5 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "@/connection";
-import Request from "@/models/Request"
 
 class Office extends Model {
     declare id: number;

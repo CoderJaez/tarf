@@ -20,17 +20,42 @@ const Form: React.FC<Prop> = ({ offices }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<RequestFormData>({ resolver: zodResolver(RequestSchema) });
   const now = new Date();
   const hours = String(now.getHours()).padStart(2, "0");
   const minutes = String(now.getMinutes()).padStart(2, "0");
   const currentTime = `${hours}:${minutes}`;
-  const submit = async (formData: RequestFormData) => {
-    Swal.fire({
-      title: "Test",
-    });
-    // const result = await insertRequest(formData);
+  const submit = (formData: RequestFormData) => {
+    try {
+      Swal.fire({
+        title: "Submitting",
+        allowOutsideClick: false,
+        didOpen: async () => {
+          Swal.showLoading();
+          const result = await insertRequest(formData);
+          if (result) {
+            Swal.fire({
+              title: "Success!",
+              text: "Succesfully submitted your request",
+              icon: "success",
+            });
+
+            reset();
+          } else {
+            Swal.fire({
+              title: "Something went wrong",
+              text: "Failed to submit your request",
+              icon: "error",
+            });
+          }
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
     // console.log(result);
   };
   return (
@@ -198,6 +223,7 @@ const Form: React.FC<Prop> = ({ offices }) => {
             </span>
           )}
           <div className="mt-2 grid grid-cols-3 gap-4">
+            {/* Desktop/Laptop Repair */}
             <div>
               <input
                 type="checkbox"
@@ -286,7 +312,8 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 </label>
               </div>
             </div>
-
+            {/* Desktop/Laptop Repair */}
+            {/* APPLICATION/SOFTWARE/SYSTEM ASSISTANCE */}
             <div>
               <input
                 type="checkbox"
@@ -379,6 +406,8 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 </label>
               </div>
             </div>
+            {/* APPLICATION/SOFTWARE/SYSTEM ASSISTANCE */}
+            {/* INTERNET CONNECTIVITY */}
             <div>
               <input
                 type="checkbox"
@@ -437,6 +466,8 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 </label>
               </div>
             </div>
+            {/* INTERNET CONNECTIVITY */}
+            {/* HARDWARE INSTALLATION */}
             <div>
               <input
                 type="checkbox"
@@ -510,6 +541,8 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 </label>
               </div>
             </div>
+            {/* HARDWARE INSTALLATION */}
+            {/* GOVMAIL ASSISTANCE */}
             <div>
               <input
                 type="checkbox"
@@ -554,6 +587,8 @@ const Form: React.FC<Prop> = ({ offices }) => {
                 </label>
               </div>
             </div>
+            {/* GOVMAIL ASSISTANCE */}
+
             <div>
               <input
                 type="checkbox"
@@ -567,7 +602,6 @@ const Form: React.FC<Prop> = ({ offices }) => {
               </label>
               {/* Add more checkboxes similarly */}
             </div>
-
             <div>
               <input
                 type="checkbox"

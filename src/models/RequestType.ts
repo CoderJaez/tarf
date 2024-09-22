@@ -6,6 +6,7 @@ class RequestType extends Model {
     declare type: string;
     declare subtype: string;
     declare requestId: string;
+    SubType: any;
 
 }
 
