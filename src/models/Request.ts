@@ -3,7 +3,9 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "@/connection";
 import moment from "moment";
-import { BeforeCreate } from "sequelize-typescript";
+import Office from "./Office";
+import User from "./User";
+
 class Request extends Model {
     declare id: number;
     declare name: string;
@@ -20,16 +22,8 @@ class Request extends Model {
     declare dateDone: Date | null
     declare code: string
     declare officeId: number;
-
-    static associate(models: any) {
-
-        Request.hasOne(models.User, {
-            foreignKey: 'assignedTechId'
-        })
-        Request.belongsTo(models.Office, {
-            foreignKey: 'officeId'
-        })
-    }
+    declare Office: Office;
+    declare User: User | null
 
 }
 
@@ -114,7 +108,14 @@ Request.init({
     }
 })
 
+Request.hasOne(Office, {
+    foreignKey: 'id'
+})
 
+
+Request.hasOne(User, {
+    foreignKey: 'id'
+})
 
 
 export default Request;

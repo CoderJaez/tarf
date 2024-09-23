@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Home, Users, Calendar, Settings, Ticket } from "lucide-react";
+import { Menu, X, Home, Users, Settings, Ticket } from "lucide-react";
 
 type Props = {
   children: any;
@@ -11,9 +11,8 @@ const Layout: React.FC<Props> = ({ children }) => {
 
   const navItems = [
     { name: "Dashboard", icon: Home, href: "/dashboard" },
-    { name: "Ticket", icon: Ticket, href: "/" },
-    { name: "Customers", icon: Users, href: "/customers" },
-    { name: "Calendar", icon: Calendar, href: "/calendar" },
+    { name: "Ticket", icon: Ticket, href: "/tickets" },
+    { name: "Users", icon: Users, href: "/users" },
     { name: "Settings", icon: Settings, href: "/settings" },
   ];
 

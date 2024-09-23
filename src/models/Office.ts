@@ -1,13 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "@/connection";
 
+
 class Office extends Model {
     declare id: number;
     declare name: string;
     declare acronym: string;
 
     static associate(models: any) {
-        Office.belongsTo(models.Request, {
+        models.Office.belongsTo(models.Request, {
             foreignKey: 'officeId'
         })
     }
@@ -35,7 +36,6 @@ Office.init(
     updatedAt: 'updatedAt'
 }
 )
-
 
 
 

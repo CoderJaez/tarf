@@ -1,4 +1,4 @@
-import { z, ZodType } from 'zod';
+import { z } from 'zod';
 
 export const RequestSchema = z.object({
     request_name: z.string({ message: "Name is required" }).min(4, { message: "Name length must be greater than 4 characters." }),

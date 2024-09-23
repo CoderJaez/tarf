@@ -5,8 +5,24 @@ import RequestDetail from "@/models/RequestDetails";
 import { RequestSchema } from "@/schemas/request.schema";
 import { z } from 'zod'
 import sequelize from "@/connection";
+import Office from "@/models/Office";
+import User from "@/models/User";
+
+
 const getRequest = async () => {
-    const requests = await Request.findAll();
+    const requests = await Request.findAll({
+        include: [
+            {
+                model: Office,
+
+            },
+            {
+                model: User
+            }
+        ]
+
+
+    });
     return requests;
 }
 
