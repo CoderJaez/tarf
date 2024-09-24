@@ -4,6 +4,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "@/schemas/user.schema";
+import { insertUser } from "@/services/user";
 const UserForm = () => {
   type FormData = z.infer<typeof userSchema>;
   const {
@@ -14,11 +15,12 @@ const UserForm = () => {
   } = useForm<FormData>({ resolver: zodResolver(userSchema) });
 
   const submit = async (formData: FormData) => {
-    console.log(formData);
+    const result = await insertUser(formData);
+    alert(result);
   };
 
   return (
-    <div>
+    <div className="bg-white p-4 rounded shadow-md w-full ">
       <form
         onSubmit={handleSubmit(submit)}
         className="bg-white p-8 rounded shadow-md w-full max-w-md"
@@ -32,9 +34,13 @@ const UserForm = () => {
           </label>
           <input
             type="text"
-            {...register("name")}
-            id="name"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            {...register("name", {
+              setValueAs: (value: string) => {
+                if (value === "") return undefined;
+                return value;
+              },
+            })}
+            className="text-slate-800 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
           {errors.name && (
             <span className="text-red-500 italic text-sm">
@@ -52,9 +58,20 @@ const UserForm = () => {
           </label>
           <input
             type="text"
-            name="username"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            {...register("username", {
+              setValueAs: (value: string) => {
+                console.log(value);
+                if (value === "") return undefined;
+                return value;
+              },
+            })}
+            className="text-slate-800 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
+          {errors.username && (
+            <span className="text-red-500 italic text-sm">
+              {errors.username.message}
+            </span>
+          )}
         </div>
 
         <div className="mb-4">
@@ -66,10 +83,19 @@ const UserForm = () => {
           </label>
           <input
             type="email"
-            name="email"
-            id="email"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            {...register("email", {
+              setValueAs: (value: string) => {
+                if (value === "") return undefined;
+                return value;
+              },
+            })}
+            className="text-slate-800 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
+          {errors.email && (
+            <span className="text-red-500 italic text-sm">
+              {errors.email.message}
+            </span>
+          )}
         </div>
 
         <div className="mb-4">
@@ -81,10 +107,19 @@ const UserForm = () => {
           </label>
           <input
             type="password"
-            name="password"
-            id="password"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            {...register("password", {
+              setValueAs: (value: string) => {
+                if (value === "") return undefined;
+                return value;
+              },
+            })}
+            className="text-slate-800 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
+          {errors.password && (
+            <span className="text-red-500 italic text-sm">
+              {errors.password.message}
+            </span>
+          )}
         </div>
 
         <div className="mb-6">
@@ -96,10 +131,19 @@ const UserForm = () => {
           </label>
           <input
             type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            {...register("confirmPassword", {
+              setValueAs: (value: string) => {
+                if (value === "") return undefined;
+                return value;
+              },
+            })}
+            className="text-slate-800 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
+          {errors.confirmPassword && (
+            <span className="text-red-500 italic text-sm">
+              {errors.confirmPassword.message}
+            </span>
+          )}
         </div>
 
         <button
