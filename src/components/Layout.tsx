@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Home, Users, Settings, Ticket } from "lucide-react";
+import { Menu, X, Home, Users, Settings, Ticket, User } from "lucide-react";
 
 type Props = {
   children: any;
@@ -25,7 +25,7 @@ const Layout: React.FC<Props> = ({ children }) => {
         } fixed inset-y-0 left-0 z-30 w-64 bg-gray-900 text-white transition duration-300 ease-in-out transform lg:translate-x-0 lg:static lg:inset-0`}
       >
         <div className="flex items-center justify-between h-16 px-6">
-          <span className="text-2xl font-semibold">Admin Panel</span>
+          <span className="text-2xl font-semibold">DILG 9 - TARF</span>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden">
             <X size={24} />
           </button>
@@ -50,7 +50,7 @@ const Layout: React.FC<Props> = ({ children }) => {
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <header className="flex items-center justify-between px-6 py-4 bg-white border-b">
+        <header className="flex items-center sm:justify-between  lg:justify-end px-6 py-4 bg-white border-b ">
           <button
             onClick={() => setSidebarOpen(true)}
             className="text-gray-500 focus:outline-none lg:hidden"
@@ -59,11 +59,8 @@ const Layout: React.FC<Props> = ({ children }) => {
           </button>
           <div className="flex items-center space-x-4">
             <span className="font-semibold text-slate-800">John Doe</span>
-            <img
-              className="h-8 w-8 rounded-full"
-              src="/api/placeholder/32/32"
-              alt="User avatar"
-            />
+
+            <User size={30} className="h-8 w-8 rounded-full bg-slate-800 p-2" />
           </div>
         </header>
 

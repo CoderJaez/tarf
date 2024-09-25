@@ -1,7 +1,6 @@
 import React from "react";
 import Layout from "@/components/Layout";
 import { redirect } from "next/navigation";
-import { userSchema } from "@/schemas/user.schema";
 import UserForm from "@/components/form/UserForm";
 type Prop = {
   params: {

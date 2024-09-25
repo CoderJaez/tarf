@@ -7,6 +7,8 @@ class User extends Model {
     declare username: string;
     declare password: string;
     declare email: string;
+    declare createdAt: Date;
+    declare updatedAt: Date
 
     static associate(models: any) {
         User.belongsTo(models.Request, {

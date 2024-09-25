@@ -29,30 +29,32 @@ const Ticket: React.FC = async () => {
         </tr>
       </thead>
       <tbody>
-        {tickets.map((ticket, index) => (
-          <tr key={index}>
-            <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-              <p className="text-slate-700">{ticket.code}</p>
-            </td>
-            <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-              <p className="text-slate-700 ">{ticket.Office.acronym}</p>
-            </td>
-            <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-              <p className="text-slate-700 ">{ticket.name}</p>
-            </td>
-            <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-              <p className="text-slate-700 ">{ticket.remarks}</p>
-            </td>
-            <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-              <p className="text-slate-700 ">
-                {moment(ticket.dateRequested.toString()).format(
-                  "MM DD, YYYY HH:mm A"
-                )}
-              </p>
-            </td>
-            <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark"></td>
-          </tr>
-        ))}
+        {tickets.length > 0
+          ? tickets.map((ticket, index) => (
+              <tr key={index}>
+                <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p className="text-slate-700">{ticket.code}</p>
+                </td>
+                <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p className="text-slate-700 ">{ticket.Office.acronym}</p>
+                </td>
+                <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p className="text-slate-700 ">{ticket.name}</p>
+                </td>
+                <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p className="text-slate-700 ">{ticket.remarks}</p>
+                </td>
+                <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p className="text-slate-700 ">
+                    {moment(ticket.dateRequested.toString()).format(
+                      "MM DD, YYYY HH:mm A"
+                    )}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark"></td>
+              </tr>
+            ))
+          : null}
       </tbody>
     </Table>
   );
