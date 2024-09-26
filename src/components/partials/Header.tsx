@@ -1,7 +1,18 @@
 import React from "react";
-import Head from "next/head";
+import Link from "next/link";
 const Header = () => {
-  return <div>Header</div>;
+  return (
+    <header className="flex justify-between p-4 mx-4">
+      <div>
+        <h1 className="text-lg">DILG 9 - Technical Assistance Request Form</h1>
+      </div>
+      <nav className="text-lg">
+        <li className="list-none px-4 rounded hover:bg-slate-300 hover:text-slate-800 ">
+          <Link href="/login">Login</Link>
+        </li>
+      </nav>
+    </header>
+  );
 };
 
 export default Header;
