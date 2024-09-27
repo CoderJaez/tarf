@@ -22,5 +22,12 @@ const insertUser = async (data: z.infer<typeof userSchema>) => {
     return false
 }
 
+const authUser = async (username: string, password: string) => {
+    const user = await User.findOne({
+        where: { username: username, password }
+    })
+    return user;
+}
 
-export { getUsers, insertUser }
+
+export { getUsers, insertUser, authUser }
