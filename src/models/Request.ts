@@ -64,7 +64,8 @@ Request.init({
     },
     recommendation: {
         type: DataTypes.STRING
-    }, assignedTechId: {
+    },
+    assignedTechId: {
         type: DataTypes.INTEGER.UNSIGNED,
         references: {
             model: 'Users',
@@ -92,30 +93,29 @@ Request.init({
     updatedAt: 'updatedAt',
     hooks: {
         beforeCreate: async (request, options) => {
-            const yearMonth = moment().format('YYYYMM')
+            const yearMonth = moment().format('YYYY')
             const lastRequest = await Request.findOne({
                 order: [['createdAt', 'DESC']]
             })
-            let nextNumber = '0001';
+            let nextNumber = '001';
             if (lastRequest && lastRequest.code) {
                 const lastRequestCode = lastRequest.code;
-                const lastSequence = parseInt(lastRequest.code.split('-')[1]);
-                nextNumber = String(lastSequence + 1).padStart(4, '0')
+                const lastSequence = parseInt(lastRequest.code.split('-')[2]);
+                nextNumber = String(lastSequence + 1).padStart(3, '0')
             }
 
-            request.code = `${yearMonth}-${nextNumber}`
+            request.code = `rictuix-${yearMonth}-${nextNumber}`
         }
     }
 })
 
-Request.hasOne(Office, {
-    foreignKey: 'id'
+Request.belongsTo(Office, {
+    foreignKey: 'officeId'
+})
+Request.belongsTo(User, {
+    foreignKey: "assignedTechId"
 })
 
-
-Request.hasOne(User, {
-    foreignKey: 'id'
-})
 
 
 export default Request;

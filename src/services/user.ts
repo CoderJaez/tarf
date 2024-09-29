@@ -24,9 +24,18 @@ const insertUser = async (data: z.infer<typeof userSchema>) => {
 
 const authUser = async (username: string, password: string) => {
     const user = await User.findOne({
-        where: { username: username, password }
+        where: { username: username }
     })
-    return user;
+    if (!user)
+        return null
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password)
+    console.log("Password match: ", isPasswordMatch)
+    if (!isPasswordMatch)
+        return null
+
+    return user
+
 }
 
 

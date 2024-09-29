@@ -14,10 +14,10 @@ const getRequest = async () => {
         include: [
             {
                 model: Office,
-
+                as: 'Office',
             },
             {
-                model: User
+                model: User,
             }
         ]
 

@@ -5,21 +5,38 @@ import userAuthSchema from "@/schemas/userAuth.schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Swal from "sweetalert2";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 const UserAuthForm: React.FC = () => {
   type FormData = z.infer<typeof userAuthSchema>;
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(userAuthSchema) });
 
-  const submit = async () => {
+  const submit = async (formData: FormData) => {
     Swal.fire({
       title: "Authenticating",
       text: "Please wait...",
       allowOutsideClick: false,
-      didOpen: () => {
+      didOpen: async () => {
         Swal.showLoading();
+        const res = await signIn("credentials", {
+          username: formData.username,
+          password: formData.password,
+        });
+        console.log("Result:", res);
+        if (res?.error) {
+          Swal.fire({
+            title: "Invalid",
+            text: "Username/Password is incorrect.",
+          });
+        } else {
+          router.push("/dashboard"); // Redirect to protected page
+        }
       },
     });
   };
