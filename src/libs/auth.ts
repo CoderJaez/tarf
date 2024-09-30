@@ -1,9 +1,15 @@
 import { authUser } from "@/services/user";
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-export const { handler, auth, signIn, signOut } = NextAuth({
+import Credentials from "next-auth/providers/credentials";
+
+export const {
+    handlers: { GET, POST },
+    auth,
+    signIn,
+    signOut,
+} = NextAuth({
     providers: [
-        CredentialsProvider({
+        Credentials({
             name: "Credentials",
             credentials: {
                 username: { label: "Username", type: "text", placeholder: "Username" },
