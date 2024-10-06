@@ -25,7 +25,7 @@ export const {
                 if (user) {
                     return {
                         id: user.id.toString(),
-                        username: user.password,
+                        username: user.username,
                         name: user.name
                     };
                 } else {
@@ -39,13 +39,20 @@ export const {
         maxAge: 30 * 60, // Session expiration after 30 minutes of inactivity
     },
     callbacks: {
-        async jwt({ token, user, account }) {
+        async jwt({ token, account }) {
             if (account?.provider === "credentials") {
                 token.credentials = true
             }
             return token
         },
+        async session({ session, token }) {
+            // console.log('token', token);
+            session.user.id = token.id as string;
+            return session
+        },
+
     },
+
     cookies: {
         sessionToken: {
             name: 'next-auth.session-token',

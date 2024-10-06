@@ -27,14 +27,16 @@ const UserAuthForm: React.FC = () => {
         const res = await signIn("credentials", {
           username: formData.username,
           password: formData.password,
+          redirect: false,
         });
-        console.log("Result:", res);
-        if (res?.error) {
+        if (!res?.ok) {
           Swal.fire({
             title: "Invalid",
             text: "Username/Password is incorrect.",
+            icon: "error",
           });
         } else {
+          Swal.close();
           router.push("/dashboard"); // Redirect to protected page
         }
       },
