@@ -29,7 +29,7 @@ const UserAuthForm: React.FC = () => {
           password: formData.password,
           redirect: false,
         });
-        if (!res?.ok) {
+        if (res?.error) {
           Swal.fire({
             title: "Invalid",
             text: "Username/Password is incorrect.",

@@ -51,8 +51,11 @@ export const {
             return session
         },
 
-    },
 
+    },
+    pages: {
+        signIn: "/login"
+    },
     cookies: {
         sessionToken: {
             name: 'next-auth.session-token',

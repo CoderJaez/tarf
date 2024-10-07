@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Home, Users, Settings, Ticket, User } from "lucide-react";
+import UserProfileDropDown from "./form_elements/UserProfileDropDown";
+import { Menu, X, Home, Users, Settings, Ticket } from "lucide-react";
 
 type Props = {
-  children: any;
+  children: React.ReactNode;
 };
 const Layout: React.FC<Props> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -38,7 +39,6 @@ const Layout: React.FC<Props> = ({ children }) => {
                   href={item.href}
                   className="flex items-center space-x-3 text-gray-300 hover:text-white"
                 >
-                  <item.icon size={20} />
                   <span>{item.name}</span>
                 </Link>
               </li>
@@ -57,11 +57,8 @@ const Layout: React.FC<Props> = ({ children }) => {
           >
             <Menu size={24} />
           </button>
-          <div className="flex items-center space-x-4">
-            <span className="font-semibold text-slate-800">John Doe</span>
 
-            <User size={30} className="h-8 w-8 rounded-full bg-slate-800 p-2" />
-          </div>
+          <UserProfileDropDown />
         </header>
 
         {/* Page content */}
