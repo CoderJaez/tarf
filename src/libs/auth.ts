@@ -26,8 +26,8 @@ export const {
                 if (user) {
                     return {
                         id: user.id.toString(),
-                        username: user.username,
-                        name: user.name
+                        name: user.name,
+                        email: user.email
                     };
                 } else {
                     return null;
@@ -47,8 +47,7 @@ export const {
             return token
         },
         async session({ session, token }) {
-            // console.log('token', token);
-            session.user.id = token.id as string;
+            session.user.id = token.sub as string;
             return session
         },
 

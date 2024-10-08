@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
-import { error } from "console";
 export default function PushNotification() {
   const [subscribed, setSubscribed] = useState(false);
   useEffect(() => {
