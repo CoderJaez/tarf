@@ -14,7 +14,7 @@ export default async function Home() {
   });
 
   return (
-    <>
+    <div>
       <Header />
       <div className="min-h-screen bg-gray-100 py-8">
         <Form
@@ -25,6 +25,6 @@ export default async function Home() {
           }}
         />
       </div>
-    </>
+    </div>
   );
 }

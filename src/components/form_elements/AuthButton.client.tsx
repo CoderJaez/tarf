@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { signIn, signOut } from "@/helpers/authHelper";
+import { signOut } from "@/helpers/authHelper";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 const AuthButtonClient: React.FC = () => {
