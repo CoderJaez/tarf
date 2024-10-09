@@ -26,6 +26,24 @@ const getRequest = async () => {
     return requests;
 }
 
+const getPendingRequest = async () => {
+    try {
+        const requests = await Request.findAll({
+            include: [{
+                model: Office,
+
+            }, {
+                model: RequestDetail
+            }]
+        })
+        return requests
+
+    } catch (error: any) {
+        console.log(error.message)
+        return null
+    }
+}
+
 const insertRequest = async (data: z.infer<typeof RequestSchema>) => {
     const t = await sequelize.transaction();
     try {
@@ -74,4 +92,4 @@ const insertRequest = async (data: z.infer<typeof RequestSchema>) => {
 }
 
 
-export { getRequest, insertRequest }
+export { getRequest, insertRequest, getPendingRequest }

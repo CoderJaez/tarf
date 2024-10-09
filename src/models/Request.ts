@@ -5,6 +5,7 @@ import sequelize from "@/connection";
 import moment from "moment";
 import Office from "./Office";
 import User from "./User";
+import RequestDetail from "./RequestDetails";
 
 class Request extends Model {
     declare id: number;
@@ -111,6 +112,9 @@ Request.init({
 
 Request.belongsTo(Office, {
     foreignKey: 'officeId'
+})
+Request.hasMany(RequestDetail, {
+    foreignKey: 'requestId'
 })
 Request.belongsTo(User, {
     foreignKey: "assignedTechId"

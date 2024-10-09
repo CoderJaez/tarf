@@ -39,7 +39,9 @@ RequestDetail.init(
 )
 
 
-RequestDetail.hasOne(RequestType)
+RequestDetail.belongsTo(RequestType, {
+    foreignKey: 'requestTypeId'
+})
 
 
 export default RequestDetail
