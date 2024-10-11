@@ -7,6 +7,7 @@ import { z } from 'zod'
 import sequelize from "@/connection";
 import Office from "@/models/Office";
 import User from "@/models/User";
+import RequestType from "@/models/RequestType";
 
 
 const getRequest = async () => {
@@ -33,7 +34,10 @@ const getPendingRequest = async () => {
                 model: Office,
 
             }, {
-                model: RequestDetail
+                model: RequestDetail,
+                include: [{
+                    model: RequestType
+                }]
             }]
         })
         return requests

@@ -1,11 +1,13 @@
 import Pusher from "pusher";
 
-
-
-const pusher = new Pusher({
-    appId: '1869134',
-    key: 'd13dce0ca416f8835441',
-    secret: '993213e7ddebc4d79bfc',
-    cluster: 'ap1',
+const { NEXT_PUSHER_APPID, NEXT_PUSHER_KEY, NEXT_PUSHER_SECRET, NEXT_PUSHER_CLUSTER } = process.env
+const PusherServer = new Pusher({
+    appId: NEXT_PUSHER_APPID as string,
+    key: NEXT_PUSHER_KEY as string,
+    secret: NEXT_PUSHER_SECRET as string,
+    cluster: NEXT_PUSHER_CLUSTER as string,
     useTLS: true
 })
+
+
+export default PusherServer

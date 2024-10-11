@@ -8,7 +8,7 @@ export const {
     signIn,
     signOut,
 } = NextAuth({
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET as string,
     providers: [
         Credentials({
             name: "Credentials",
