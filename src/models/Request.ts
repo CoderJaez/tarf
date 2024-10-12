@@ -24,7 +24,8 @@ class Request extends Model {
     declare code: string
     declare officeId: number;
     declare Office: Office;
-    declare User: User | null
+    declare User: User | null;
+    declare RequestDetails: RequestDetail[]
 
 }
 

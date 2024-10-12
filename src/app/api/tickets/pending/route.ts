@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getPendingRequest } from "@/services/request";
 
 export async function GET() {
@@ -6,5 +6,16 @@ export async function GET() {
     if (!result)
         return NextResponse.json([])
 
-    return NextResponse.json(result)
+    const pendingRequest = result.map((req) => {
+        return {
+            id: req.id,
+            name: req.name,
+            remarks: req.remarks,
+            dateRequested: req.dateRequested,
+            office: req.Office.acronym,
+            requestTypes: req.RequestDetails.map((detail) => detail.RequestType.type)
+        }
+    })
+
+    return NextResponse.json(pendingRequest)
 }

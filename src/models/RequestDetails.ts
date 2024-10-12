@@ -6,6 +6,7 @@ class RequestDetail extends Model {
     declare id: number;
     declare requestTypeId: number;
     declare requestId: number;
+    declare RequestType: RequestType
 
 }
 

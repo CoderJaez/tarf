@@ -1,3 +1,5 @@
+
+
 type Option = {
     value: 'string',
     label: 'string'
@@ -20,4 +22,14 @@ type RequestFormData = {
     property_no?: string
 }
 
-export type { Option, RequestFormData }
+type PendingRequest = {
+    id: number,
+    name: string,
+    dateRequested: Date,
+    office: string,
+    remarks: string,
+    requestTypes: string[]
+}
+
+
+export type { Option, RequestFormData, PendingRequest }

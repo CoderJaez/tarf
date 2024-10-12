@@ -8,7 +8,8 @@ import sequelize from "@/connection";
 import Office from "@/models/Office";
 import User from "@/models/User";
 import RequestType from "@/models/RequestType";
-
+import { Op } from "sequelize";
+import PusherServer from "@/libs/pusher_channels/serverChannel";
 
 const getRequest = async () => {
     const requests = await Request.findAll({
@@ -36,11 +37,38 @@ const getPendingRequest = async () => {
             }, {
                 model: RequestDetail,
                 include: [{
-                    model: RequestType
-                }]
-            }]
+                    model: RequestType,
+                    where: { requestId: { [Op.eq]: null } }
+                }],
+
+            }],
+            where: { assignedTechId: { [Op.eq]: null } }
         })
         return requests
+
+    } catch (error: any) {
+        console.log(error.message)
+        return null
+    }
+}
+
+const getOnePendingRequest = async (id: number) => {
+    try {
+        const request = await Request.findOne({
+            include: [{
+                model: Office,
+
+            }, {
+                model: RequestDetail,
+                include: [{
+                    model: RequestType,
+                    where: { requestId: { [Op.eq]: null } }
+                }],
+
+            }],
+            where: { id: id }
+        })
+        return request
 
     } catch (error: any) {
         console.log(error.message)
@@ -80,11 +108,20 @@ const insertRequest = async (data: z.infer<typeof RequestSchema>) => {
         await beamsClient.publishToInterests(["hello"], {
             web: {
                 notification: {
-                    title: "You have new request",
+                    title: `You have new ticket from ${data.request_name}`,
                     body: data.remarks,
                 },
             },
         });
+
+        const pendingNewRequest = await getOnePendingRequest(newRequest.id)
+        PusherServer.trigger('request', 'request-event', {
+            id: pendingNewRequest?.id,
+            name: pendingNewRequest?.name,
+            office: pendingNewRequest?.Office.acronym,
+            remarks: pendingNewRequest?.remarks,
+            requestTypes: pendingNewRequest?.RequestDetails.map((req) => req.RequestType.type)
+        })
         return true;
     } catch (error: any) {
         console.log(error.message)

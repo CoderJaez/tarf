@@ -6,8 +6,7 @@ class RequestType extends Model {
     declare type: string;
     declare subtype: string;
     declare requestId: string;
-    SubType: any;
-
+    declare SubTypes: any;
 }
 
 RequestType.init({
@@ -39,7 +38,7 @@ RequestType.init({
 })
 
 RequestType.hasMany(RequestType, {
-    as: 'SubType',
+    as: 'SubTypes',
     foreignKey: 'requestId'
 })
 
