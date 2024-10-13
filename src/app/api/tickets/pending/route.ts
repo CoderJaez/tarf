@@ -17,5 +17,5 @@ export async function GET() {
         }
     })
 
-    return NextResponse.json(pendingRequest)
+    return NextResponse.json(pendingRequest, { status: 200 })
 }

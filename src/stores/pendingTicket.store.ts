@@ -17,7 +17,7 @@ const usePendingRequestStore = create<PendingRequestState>()((set) => ({
         set(() => ({ pendingRequest: tickets as PendingRequest[] }))
     },
     addPendingRequest: (data: PendingRequest) => set((state) => ({ pendingRequest: [data, ...state.pendingRequest] })),
-    deletePendingRequest: (id: number) => set((state) => ({ pendingRequest: state.pendingRequest.filter((request) => request.id) }))
+    deletePendingRequest: (id: number) => set((state) => ({ pendingRequest: state.pendingRequest.filter((request) => request.id !== id) }))
 }))
 
 export default usePendingRequestStore

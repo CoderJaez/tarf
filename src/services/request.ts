@@ -133,4 +133,17 @@ const insertRequest = async (data: z.infer<typeof RequestSchema>) => {
 }
 
 
-export { getRequest, insertRequest, getPendingRequest }
+const assignTech = async (techId: number, requestId: number) => {
+    try {
+        const result = await Request.update({ assignedTechId: techId }, {
+            where: { id: requestId }
+        })
+        if (!result) return true;
+        return true
+    } catch (error: any) {
+        console.log('Request Model:', error.message)
+        return false;
+    }
+}
+
+export { getRequest, insertRequest, getPendingRequest, assignTech }

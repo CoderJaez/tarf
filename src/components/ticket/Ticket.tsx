@@ -1,9 +1,13 @@
+"use client";
 import React from "react";
 import Table from "../form_elements/Table";
-import { getRequest } from "@/services/request";
 import moment from "moment";
-const Ticket: React.FC = async () => {
-  const tickets = await getRequest();
+import Request from "@/models/Request";
+
+type Props = {
+  tickets: Request[];
+};
+const Ticket: React.FC<Props> = ({ tickets }) => {
   return (
     <Table>
       <thead>
@@ -47,7 +51,7 @@ const Ticket: React.FC = async () => {
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <p className="text-slate-700 ">
                     {moment(ticket.dateRequested.toString()).format(
-                      "MM DD, YYYY HH:mm A"
+                      "MM DD, YYYY hh:mm A"
                     )}
                   </p>
                 </td>
