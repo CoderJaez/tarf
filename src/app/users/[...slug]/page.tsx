@@ -7,6 +7,7 @@ type Prop = {
     slug: string;
   };
 };
+export const dynamic = "force-dynamic";
 const page = ({ params }: Prop) => {
   const action =
     params.slug[0] === "new" || params.slug[0] === "update"

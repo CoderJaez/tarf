@@ -3,6 +3,7 @@ import Layout from "@/components/Layout";
 import UserList from "@/components/users/UserList";
 import RouteButton from "@/components/form_elements/RouteButton";
 import { getUsers } from "@/services/user";
+export const dynamic = "force-dynamic";
 const page: React.FC = async () => {
   const users = await getUsers();
 

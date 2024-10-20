@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "@/components/Layout";
-// import RouteButton from "@/components/form_elements/RouteButton";
+import RouteButton from "@/components/form_elements/RouteButton";
 import { getRequest } from "@/services/request";
 import Table from "@/components/form_elements/Table";
 import moment from "moment";
@@ -11,7 +11,7 @@ const page: React.FC = async () => {
     <Layout>
       <div className="flex justify-between mb-4">
         <h1 className="text-2xl font-semibold text-slate-800 my-2">Tickets</h1>
-        {/* <RouteButton Url="/" Text="Create Ticket" /> */}
+        <RouteButton Url="/" Text="Create Ticket" />
       </div>
       <Table>
         <thead>

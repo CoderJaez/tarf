@@ -6,7 +6,7 @@ type Prop = {
     statusCode: string;
   };
 };
-
+export const dynamic = "force-dynamic";
 const ErrorPage: React.FC<Prop> = ({ params }) => {
   const errorMessages = {
     404: "Page Not Found",

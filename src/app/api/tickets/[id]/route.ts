@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import Request from "@/models/Request";
 import { assignTech } from "@/services/request";
+
+export const dynamic = "force-dynamic";
 export async function POST(req: NextRequest, context: any) {
     const { params } = context;
     const data = await req.json()
