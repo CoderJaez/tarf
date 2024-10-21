@@ -104,7 +104,6 @@ const insertRequest = async (data: z.infer<typeof RequestSchema>) => {
 
         }
 
-        t.commit();
         await beamsClient.publishToInterests(["hello"], {
             web: {
                 notification: {
@@ -122,14 +121,16 @@ const insertRequest = async (data: z.infer<typeof RequestSchema>) => {
             remarks: pendingNewRequest?.remarks,
             requestTypes: pendingNewRequest?.RequestDetails.map((req) => req.RequestType.type)
         })
+        t.commit();
         return true;
     } catch (error: any) {
-        console.log(error.message)
+        console.log("Error:", error.message)
         t.rollback();
         return false;
     }
 
-    return false;
+    return true;
+
 }
 
 

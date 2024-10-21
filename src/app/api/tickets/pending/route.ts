@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getPendingRequest } from "@/services/request";
-export const dynamic = 'force-dynamic'
+
 export async function GET() {
     const result = await getPendingRequest()
     if (!result)

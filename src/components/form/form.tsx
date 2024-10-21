@@ -52,8 +52,8 @@ const Form: React.FC<Prop> = ({ offices }) => {
           }
         },
       });
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log(error.message);
     }
 
     // console.log(result);
